@@ -38,6 +38,8 @@ namespace Opm::Properties {
 namespace TTag {
     struct SimpleTestEcfvProblem 
 {
+    //\Note: this Flash Model is from opm/models/flash/flashmodel.hh ?
+    //\Note: or opm/models/ptflash/flashmodel.hh?
     using InheritsFrom = std::tuple<SimpleTest, FlashModel>;
 };
 }
