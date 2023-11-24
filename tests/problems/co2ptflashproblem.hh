@@ -29,6 +29,10 @@
 #define OPM_CO2PTFLASH_PROBLEM_HH
 
 #include <opm/common/Exceptions.hpp>
+
+#include <opm/material/components/SimpleCO2.hpp>
+#include <opm/material/components/C10.hpp>
+#include <opm/material/components/C1.hpp>
 #include <opm/material/fluidmatrixinteractions/RegularizedBrooksCorey.hpp>
 #include <opm/material/fluidmatrixinteractions/BrooksCorey.hpp>
 #include <opm/material/constraintsolvers/PTFlash.hpp> 
@@ -344,6 +348,17 @@ public:
         const Scalar epi_len = EWOMS_GET_PARAM(TypeTag, Scalar, EpisodeLength);
         simulator.setEpisodeLength(epi_len);
         FluidSystem::init();
+        using CompParm = ComponentParam<Scalar>;
+        using CO2 = Opm::SimpleCO2<Scalar>;
+        using C1 = Opm::C1<Scalar>;
+        using C10 = Opm::C10<Scalar>;
+        FluidSystem::addComponent(CompParm {CO2::name(), CO2::molarMass(), CO2::criticalTemperature(),
+                                   CO2::criticalPressure(), CO2::criticalVolume(), CO2::acentricFactor()});
+        FluidSystem::addComponent(CompParm {C1::name(), C1::molarMass(), C1::criticalTemperature(),
+                                   C1::criticalPressure(), C1::criticalVolume(), C1::acentricFactor()});
+        FluidSystem::addComponent(CompParm{C10::name(), C10::molarMass(), C10::criticalTemperature(),
+                                   C10::criticalPressure(), C10::criticalVolume(), C10::acentricFactor()});
+        // FluidSystem::add
     }
 
     void initPetrophysics()
