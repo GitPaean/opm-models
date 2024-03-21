@@ -52,6 +52,9 @@ class FlashIndices
 public:
     //! number of equations/primary variables
     static const int numEq = numComponents + EnergyIndices::numEq_;
+    static const bool waterEnabled = false;
+    static const bool oilEnabled = true;
+    static const bool gasEnabled = true;
 
     // Primary variable indices
 
