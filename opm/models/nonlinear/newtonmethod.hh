@@ -45,6 +45,8 @@
 #include <dune/common/classname.hh>
 #include <dune/common/parallel/mpihelper.hh>
 
+#include <opm/simulators/linalg/ISTLSolverEbos.hpp>
+
 #include <iostream>
 #include <sstream>
 
