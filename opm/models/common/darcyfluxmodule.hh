@@ -474,8 +474,10 @@ protected:
             Valgrind::CheckDefined(filterVelocity_[phaseIdx]);
 
             volumeFlux_[phaseIdx] = 0.0;
-            for (unsigned i = 0; i < normal.size(); ++i)
+            for (unsigned i = 0; i < normal.size(); ++i) {
                 volumeFlux_[phaseIdx] += filterVelocity_[phaseIdx][i] * normal[i];
+                std::cout <<  " i " << i << " phaseIdx " << phaseIdx << " filterVelocity_" << filterVelocity_[phaseIdx][i] << std::endl;
+            }
         }
     }
 
@@ -518,6 +520,7 @@ protected:
 #endif
 
         K_.mv(potentialGrad_[phaseIdx], filterVelocity_[phaseIdx]);
+        std::cout << std::endl << " filterVelocity_ " << filterVelocity_[phaseIdx] << " mobility " << mobility_[phaseIdx] << std::endl;
         filterVelocity_[phaseIdx] *= - mobility_[phaseIdx];
 
 #ifndef NDEBUG

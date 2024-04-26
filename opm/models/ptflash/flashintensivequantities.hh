@@ -108,7 +108,7 @@ public:
         const auto& problem = elemCtx.problem();
 
         const Scalar flashTolerance = Parameters::get<TypeTag, Properties::FlashTolerance>();
-        const int flashVerbosity = Parameters::get<TypeTag, Properties::FlashVerbosity>();
+        const int flashVerbosity = 10; // Parameters::get<TypeTag, Properties::FlashVerbosity>();
         const std::string flashTwoPhaseMethod = Parameters::get<TypeTag, Properties::FlashTwoPhaseMethod>();
 
         // extract the total molar densities of the components
@@ -214,6 +214,7 @@ public:
         So /= sumS;
         Sg /= sumS;
 
+        std::cout << " so " << Opm::getValue(So) << " Sg " << Opm::getValue(Sg) << std::endl;
         fluidState_.setSaturation(0, So);
         fluidState_.setSaturation(1, Sg);
 
@@ -242,6 +243,9 @@ public:
         // calculate relative permeability
         MaterialLaw::relativePermeabilities(relativePermeability_,
                                             materialParams, fluidState_);
+        // outputTypeTagInfo<MaterialLaw>();
+        // outputTypeTagInfo<MaterialLawParams>();
+        std::cout << " dofIdx " << dofIdx << " " << this->relativePermeability_[0] << " " << this->relativePermeability_[1] << std::endl;
         Opm::Valgrind::CheckDefined(relativePermeability_);
 
         // set the phase viscosity and density

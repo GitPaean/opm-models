@@ -145,6 +145,8 @@ public:
                 Evaluation tmp =
                     up.fluidState().density(phaseIdx)
                     * extQuants.volumeFlux(phaseIdx);
+                const auto& vf = extQuants.volumeFlux(phaseIdx);
+                std::cout << " density " << up.fluidState().density(phaseIdx) << " volumeFlux " << extQuants.volumeFlux(phaseIdx) <<  " tmp " << tmp << std::endl;
 
                 for (unsigned compIdx = 0; compIdx < numComponents; ++compIdx) {
                     flux[conti0EqIdx + compIdx] +=
@@ -155,12 +157,18 @@ public:
                 Evaluation tmp =
                     Toolbox::value(up.fluidState().density(phaseIdx))
                      * extQuants.volumeFlux(phaseIdx);
+                std::cout << " density " << up.fluidState().density(phaseIdx) << " volumeFlux " << extQuants.volumeFlux(phaseIdx) <<  " tmp " << tmp << std::endl;
 
                 for (unsigned compIdx = 0; compIdx < numComponents; ++compIdx) {
                     flux[conti0EqIdx + compIdx] +=
                         tmp*Toolbox::value(up.fluidState().massFraction(phaseIdx, compIdx));
                 }
             }
+        }
+
+        std::cout << std::endl;
+        for (unsigned compIdx = 0; compIdx < numComponents; ++compIdx) {
+            std::cout << " " << compIdx << " " << flux[conti0EqIdx + compIdx] << std::endl;
         }
 
         EnergyModule::addAdvectiveFlux(flux, elemCtx, scvfIdx, timeIdx);
